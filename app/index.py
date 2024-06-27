@@ -96,7 +96,6 @@ fileName = f'Atividades_{local_atividade}.pdf'
 documentTitle = 'Atividades Convertidas'
 title = 'Atividades Convertidas'
 subTitle = 'Atividades' 
-pdfmetrics.registerFont(TTFont('Arial', 'Arial.ttf'))
 
 def dataframe_para_pdf(df_final):
     buffer = BytesIO()
