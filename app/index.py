@@ -73,23 +73,22 @@ def calcular_dias_de_atividade(df_arquivo):
     df_final['Data de Execução da Atividade'] = df_final['Data de Execução da Atividade'].dt.strftime('%d/%m/%Y')
     return df_final
 
-
-
-def desenhar_regua(pdf):
-    pdf.drawString(100,810, 'x100')
-    pdf.drawString(200,810, 'x200')
-    pdf.drawString(300,810, 'x300')
-    pdf.drawString(400,810, 'x400')
-    pdf.drawString(500,810, 'x500')
+# def desenhar_regua(pdf):
+    #pdf.drawString(100,810, 'x100')
+    #pdf.drawString(200,810, 'x200')
+    #pdf.drawString(300,810, 'x300')
+    #pdf.drawString(400,810, 'x400')
+    #pdf.drawString(500,810, 'x500')
   
-    pdf.drawString(10,100, 'y100')
-    pdf.drawString(10,200, 'y200')
-    pdf.drawString(10,300, 'y300')
-    pdf.drawString(10,400, 'y400')
-    pdf.drawString(10,500, 'y500')
-    pdf.drawString(10,600, 'y600')
-    pdf.drawString(10,700, 'y700')
-    pdf.drawString(10,800, 'y800')
+    #pdf.drawString(10,100, 'y100')
+    #pdf.drawString(10,200, 'y200')
+    #pdf.drawString(10,300, 'y300')
+    #pdf.drawString(10,400, 'y400')
+    #pdf.drawString(10,500, 'y500')
+    #pdf.drawString(10,600, 'y600')
+    #pdf.drawString(10,700, 'y700')
+    #pdf.drawString(10,800, 'y800')
+
 
 # Configurações DO PDF
 fileName = f'Atividades_{local_atividade}.pdf'
@@ -100,7 +99,7 @@ subTitle = 'Atividades'
 def dataframe_para_pdf(df_final):
     buffer = BytesIO()
     pdf = canvas.Canvas(buffer)
-    desenhar_regua(pdf)
+    # desenhar_regua(pdf)
 
     # DEFINIÇÕES PDF   
     pdf.setTitle(documentTitle)   
@@ -249,7 +248,6 @@ if arquivo_atividades is not None:
                     )
             else:
                 st.error('As colunas Atividade, Data Início e/ou Data Término não foram encontradas no Excel.')
-
 
 st.write("##")
 st.write("Desenvolvido por CMB Capital")
