@@ -249,8 +249,7 @@ if arquivo_atividades is not None:
                     )
             else:
                 st.error('As colunas Atividade, Data Início e/ou Data Término não foram encontradas no Excel.')
-else:
-    st.warning('Escolha um arquivo para começar.')
+
 
 st.write("##")
 st.write("Desenvolvido por CMB Capital")
