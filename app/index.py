@@ -113,25 +113,68 @@ def dataframe_para_pdf(df_final):
         pdf.drawCentredString(300, 770, title) 
 
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(25, 725, 'Local:')
+        pdf.drawString(25, 725, 'LOCAL:')
         pdf.setFont('Helvetica', 10)
         pdf.drawString(100, 725, local_atividade)
 
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(25,705, 'Data:')
+        pdf.drawString(25,705, 'DATA:')
         pdf.setFont('Helvetica', 10)
         pdf.drawString(100, 705, data)
 
-        pdf.setFont("Helvetica-Bold", 14)
-        pdf.setFillColorRGB(0, 0, 255)
-        pdf.drawString(25,680, 'Atividade:')
+        pdf.setFont("Helvetica-Bold", 10)
+        pdf.drawString(25,680, 'EFETIVO: ')
+
+        pdf.setFont('Helvetica', 10)
+        pdf.drawString(25, 660, 'Arquiteto: ')
+        pdf.line(100, 660, 400, 660)
+
+        pdf.drawString(25, 645, 'Engenheiro: ')
+        pdf.line(100, 645, 400, 645)
+
+        pdf.drawString(25, 630, 'Estagiário: ')
+        pdf.line(100, 630, 400, 630)
+
+        pdf.drawString(25, 615, 'Encarregado: ')
+        pdf.line(100, 615, 400, 615)
+
+        pdf.drawString(25, 600, 'Pedreiro: ')
+        pdf.line(100, 600, 400, 600)
+
+        pdf.drawString(25, 585, 'Servente: ')
+        pdf.line(100, 585, 400, 585)
+
+        pdf.drawString(25, 570, 'Outros: ')
+        pdf.line(100, 570, 400, 570)
+
+        pdf.setFont("Helvetica-Bold", 10)
+        pdf.drawString(25,545, 'CHEGADA DE MATERIAL: ')
+
+        pdf.line(25, 530, 400, 530)
+        pdf.line(25, 515, 400, 515)
+        pdf.line(25, 500, 400, 500)
+        pdf.line(25, 485, 400, 485)
+        pdf.line(25, 470, 400, 470)
+
+        pdf.setFont("Helvetica-Bold", 10)
+        pdf.drawString(25, 450, 'REGISTRO DE OCORRÊNCIAS / PONTOS DE ATENÇÃO: ')
+
+        pdf.line(25, 435, 400, 435)
+        pdf.line(25, 420, 400, 420)
+        pdf.line(25, 405, 400, 405)
+        pdf.line(25, 390, 400, 390)
+        pdf.line(25, 375, 400, 375)
 
         pdf.setFont("Helvetica-Bold", 14)
-        pdf.drawString(350, 680, 'ATIVIDADE FOI REALIZADA')
+        pdf.setFillColorRGB(0, 0, 255)
+        pdf.drawString(25,335, 'ATIVIDADE')
+
+        pdf.setFont("Helvetica-Bold", 14)
+        pdf.drawString(350, 335, 'ATIVIDADE FOI REALIZADA')
 
         # ESCREVER AS ATIVIDADES E A COLUNA "ATIVIDADE FOI REALIZADA"
         pdf.setFillColorRGB(0, 0, 0)
-        y_posicao = 660
+        y_posicao = 315
         for _, row in df_data.iterrows():
             pdf.setFont("Helvetica", 10)
             pdf.drawString(25, y_posicao, row['Atividade'])
@@ -142,53 +185,10 @@ def dataframe_para_pdf(df_final):
                 y_posicao = 770
                 
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(25,430, 'EFETIVO: ')
-
-        pdf.setFont('Helvetica', 10)
-        pdf.drawString(25, 415, 'Arquiteto: ')
-        pdf.line(100, 415, 400, 415)
-
-        pdf.drawString(25, 400, 'Engenheiro: ')
-        pdf.line(100, 400, 400, 400)
-
-        pdf.drawString(25, 385, 'Estagiário: ')
-        pdf.line(100, 385, 400, 385)
-
-        pdf.drawString(25, 370, 'Encarregado: ')
-        pdf.line(100, 370, 400, 370)
-
-        pdf.drawString(25, 355, 'Pedreiro: ')
-        pdf.line(100, 355, 400, 355)
-
-        pdf.drawString(25, 340, 'Servente: ')
-        pdf.line(100, 340, 400, 340)
-
-        pdf.drawString(25, 325, 'Outros: ')
-        pdf.line(100, 325, 400, 325)
-
-        pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(25,305, 'CHEGADA DE MATERIAL: ')
-
-        pdf.line(25, 285, 400, 285)
-        pdf.line(25, 270, 400, 270)
-        pdf.line(25, 255, 400, 255)
-        pdf.line(25, 240, 400, 240)
-        pdf.line(25, 225, 400, 225)
-
-        pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(25, 205, 'REGISTRO DE OCORRÊNCIAS / PONTOS DE ATENÇÃO: ')
-
-        pdf.line(25, 185, 400, 185)
-        pdf.line(25, 170, 400, 170)
-        pdf.line(25, 155, 400, 155)
-        pdf.line(25, 140, 400, 140)
-        pdf.line(25, 125, 400, 125)
-
-        pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(25, 95, 'ATENÇÃO: ')
-        pdf.drawString(25, 80, 'Enviar registro Fotográfico para o WhatsApp acessando o QR Code abaixo:')
+        pdf.drawCentredString(300, 95, 'ATENÇÃO: ')
+        pdf.drawCentredString(300, 80, 'Enviar registro Fotográfico para o WhatsApp acessando o QR Code abaixo:')
         image = 'qrlogo.png'
-        pdf.drawImage(image, 25, 25, 50, 50)
+        pdf.drawImage(image, 275, 25, 50, 50)
 
         pdf.showPage()  # NOVA PÁGINA PARA CADA DATA DE EXECUÇÃO
 
