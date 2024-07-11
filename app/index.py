@@ -95,7 +95,7 @@ def calcular_dias_de_atividade(df_arquivo):
 # Configurações DO PDF
 fileName = f'Atividades_{local_atividade}.pdf'
 documentTitle = 'Atividades Convertidas'
-title = 'Relatório de Atividades'
+title = 'Relatório Diário de Obra'
 subTitle = 'Atividades' 
 
 def dataframe_para_pdf(df_final):
@@ -130,99 +130,166 @@ def dataframe_para_pdf(df_final):
         pdf.drawString(25,685, 'CLIMA:')
         pdf.line(100, 685, 150, 685)
 
-        pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(25,660, 'EFETIVO: ')
+        # Desenha a seção de "EFETIVO"
+        pdf.drawString(25, 660, 'EFETIVO: ')
 
-        pdf.line(15, 655, 580, 655)     # LINHA HORIZONTAL SUPERIOR
-        pdf.line(15, 655, 15, 610)      # LINHA VERTICAL ESQUERDA
-        pdf.line(580, 655, 580, 610)    # LINHA VERTICAL DIREITA
-        pdf.line(15, 610, 580, 610)     # LINHA HORIZONTAL INFERIOR
-        pdf.line(15, 630, 580, 630)     # LINHA HORIZONTAL INTERNA
+        # Linhas para a tabela de "EFETIVO"
+        pdf.line(15, 655, 580, 655)     # Linha horizontal superior
+        pdf.line(15, 655, 15, 610)      # Linha vertical esquerda
+        pdf.line(580, 655, 580, 610)    # Linha vertical direita
+        pdf.line(15, 610, 580, 610)     # Linha horizontal inferior
+        pdf.line(15, 630, 580, 630)     # Linha horizontal interna
 
+        # Colunas e títulos para a tabela de "EFETIVO"
         pdf.drawString(25, 640, 'ARQUITETO')
         pdf.line(90, 655, 90, 610)
 
         pdf.drawString(100, 640, 'ENGENHEIRO')
-        pdf.line(175,655, 175, 610)
+        pdf.line(175, 655, 175, 610)
 
         pdf.drawString(185, 640, 'ESTAGIÁRIO')
         pdf.line(255, 655, 255, 610)
 
         pdf.drawCentredString(310, 640, 'ENCARREGADO')
-        pdf.line(360,655, 360, 610)
+        pdf.line(360, 655, 360, 610)
 
         pdf.drawString(370, 640, 'PEDREIRO')
-        pdf.line(435,655, 435, 610)
+        pdf.line(435, 655, 435, 610)
 
         pdf.drawString(450, 640, 'SERVENTE')
-        pdf.line(515,655, 515, 610)
+        pdf.line(515, 655, 515, 610)
 
         pdf.drawString(525, 640, 'OUTROS')
 
-        
+        # Desenha a seção de "Equipamentos" abaixo de "EFETIVO"
+        pdf.drawString(25, 580, 'EQUIPAMENTOS: ')
+
+        # Linhas para a tabela de "Equipamentos"
+        pdf.line(15, 575, 580, 575)     # Linha horizontal superior
+        pdf.line(15, 575, 15, 530)      # Linha vertical esquerda
+        pdf.line(580, 575, 580, 530)    # Linha vertical direita
+        pdf.line(15, 530, 580, 530)     # Linha horizontal inferior
+        pdf.line(15, 550, 580, 550)     # Linha horizontal interna
+
+        # Colunas para a tabela de "Equipamentos"
+        pdf.line(90, 575, 90, 530)
+        pdf.line(175, 575, 175, 530)
+        pdf.line(255, 575, 255, 530)
+        pdf.line(360, 575, 360, 530)
+        pdf.line(435, 575, 435, 530)
+        pdf.line(515, 575, 515, 530)
+
+        # Ajuste das coordenadas Y para "CHEGADA DE MATERIAL"
+        material_title_y = 500  # Título "CHEGADA DE MATERIAL" 20 unidades abaixo da última linha de "EQUIPAMENTOS"
+        material_y_top = material_title_y - 5  # Parte superior da tabela de "CHEGADA DE MATERIAL", 15 unidades abaixo do título
+        material_y_bottom = material_y_top - 120  # Altura da tabela
 
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(25,580, 'CHEGADA DE MATERIAL: ')
+        pdf.drawString(25, material_title_y, 'CHEGADA DE MATERIAL: ')
 
-        pdf.line(15, 575, 580, 575)     # LINHA SUPERIOR
-        pdf.line(15, 575, 15, 455)      # LINHA ESQUERDA
-        pdf.line(580, 575, 580, 455)    # LINHA DIREITA
-        pdf.line(15, 455, 580, 455)     # LINHA INFERIOR
+        # Linhas para a tabela de "CHEGADA DE MATERIAL"
+        pdf.line(15, material_y_top, 580, material_y_top)     # Linha superior
+        pdf.line(15, material_y_top, 15, material_y_bottom)   # Linha esquerda
+        pdf.line(580, material_y_top, 580, material_y_bottom) # Linha direita
+        pdf.line(15, material_y_bottom, 580, material_y_bottom) # Linha inferior
 
+        # Mover para uma nova página
+        pdf.showPage()
+
+        # Desenhar a seção "REGISTRO DE OCORRÊNCIAS / PONTOS DE ATENÇÃO" no início da nova página
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(25, 425, 'REGISTRO DE OCORRÊNCIAS / PONTOS DE ATENÇÃO: ')
+        pdf.drawString(25, 800, 'REGISTRO DE OCORRÊNCIAS / PONTOS DE ATENÇÃO: ')
 
-        pdf.line(15, 420, 580, 420)     # LINHA SUPERIOR
-        pdf.line(15, 420, 15, 300)      # LINHA ESQUERDA
-        pdf.line(580, 420, 580, 300)    # LINHA DIREITA
-        pdf.line(15, 300, 580, 300)     # LINHA INFERIOR
+        # Ajuste das coordenadas Y para a tabela
+        ocorrencias_y_top = 790  # Parte superior da tabela de "REGISTRO DE OCORRÊNCIAS / PONTOS DE ATENÇÃO"
+        ocorrencias_y_bottom = ocorrencias_y_top - 120  # Altura da tabela
+
+        pdf.line(15, ocorrencias_y_top, 580, ocorrencias_y_top)     # Linha superior
+        pdf.line(15, ocorrencias_y_top, 15, ocorrencias_y_bottom)   # Linha esquerda
+        pdf.line(580, ocorrencias_y_top, 580, ocorrencias_y_bottom) # Linha direita
+        pdf.line(15, ocorrencias_y_bottom, 580, ocorrencias_y_bottom) # Linha inferior
 
         def draw_header():
             pdf.setFont("Helvetica-Bold", 10)
-            pdf.drawString(25 ,270, 'ATIVIDADE')
-            pdf.drawString(300,270, 'ATIVIDADE FOI REALIZADA')
-            pdf.drawString(450, 270, 'PERCENTUAL CONCLUÍDO')
-        
-        # Iniciar a primeira página e desenhar o cabeçalho
+            pdf.drawString(25, ocorrencias_y_bottom - 30, 'ATIVIDADE')
+            pdf.drawString(300, ocorrencias_y_bottom - 30, 'ATIVIDADE FOI REALIZADA')
+            pdf.drawString(450, ocorrencias_y_bottom - 30, 'PERCENTUAL CONCLUÍDO')
+            
+        # Iniciar a nova página e desenhar o cabeçalho
         draw_header()
-        
+
         # Escrevendo as atividades e a coluna "ATIVIDADE FOI REALIZADA"
-        pdf.setFillColorRGB(0,0,0)
-        y_posicao = 240
+        pdf.setFillColorRGB(0, 0, 0)
+        y_posicao = ocorrencias_y_bottom - 60
         for _, row in df_data.iterrows():
             pdf.setFont("Helvetica", 8)
-
             pdf.drawString(25, y_posicao - 3, row['Atividade'])
             pdf.drawString(335, y_posicao, row['Atividade Foi Realizada'])
             pdf.drawString(450, y_posicao, row['Percentual Concluído'])
 
-            pdf.line(300, y_posicao + 10, 300, y_posicao - 10)      # 1° LINHA VERTICAL
-            pdf.line(440, y_posicao + 10, 440, y_posicao - 10)      # 2° LINHA VERTICAL
-            pdf.line(15, y_posicao - 10, 580, y_posicao - 10)       # LINHAS INTERNAS
+            pdf.line(300, y_posicao + 10, 300, y_posicao - 10)      # 1° Linha vertical
+            pdf.line(440, y_posicao + 10, 440, y_posicao - 10)      # 2° Linha vertical
+            pdf.line(15, y_posicao - 10, 580, y_posicao - 10)       # Linhas internas
 
             y_posicao -= 20
             if y_posicao < 50:
                 pdf.showPage()
-                def draw_header():
-                    pdf.setFont("Helvetica-Bold", 10)
-
-                    pdf.drawString(25,800, 'ATIVIDADE')
-                    pdf.drawString(300,800, 'ATIVIDADE FOI REALIZADA') 
-                    pdf.drawString(450, 800, 'PERCENTUAL CONCLUÍDO')
-                    
-                draw_header() # Desenha o cabeçalho na nova página
+                draw_header()  # Desenha o cabeçalho na nova página
                 y_posicao = 770
-                
+
         pdf.setFont("Helvetica-Bold", 10)
-        
         pdf.line(25, 70, 400, 70)
         pdf.drawString(25, 60, 'ASSINATURA RESPONSÁVEL PREENCHIMENTO')
         pdf.drawString(25, 30, 'ATENÇÃO: Enviar registro Fotográfico para o WhatsApp acessando o QR Code:')
         image = 'qrlogo.png'
         pdf.drawImage(image, 525, 25, 50, 50)
 
+
         pdf.showPage()  # NOVA PÁGINA PARA CADA DATA DE EXECUÇÃO
+        pdf.setFont("Helvetica-Bold", 16)
+        pdf.drawCentredString(300, 770, f"{title} (Continuação)") 
+
+        pdf.setFont("Helvetica-Bold", 10)
+        pdf.drawString(25, 725, 'LOCAL:')
+        pdf.setFont('Helvetica', 10)
+        pdf.drawString(100, 725, local_atividade)
+
+        pdf.setFont("Helvetica-Bold", 10)
+        pdf.drawString(25,705, 'DATA:')
+        pdf.setFont('Helvetica', 10)
+        pdf.drawString(100, 705, data)
+
+        pdf.setFont("Helvetica-Bold", 10)
+        pdf.drawString(25,685, 'ATIVIDADES REALIZADAS NÃO LISTADAS ANTERIORMENTE:')
+
+        def draw_header():
+            pdf.setFont("Helvetica-Bold", 10)
+            pdf.drawString(25, 655, 'ATIVIDADE')
+            pdf.drawString(450, 655, 'PERCENTUAL CONCLUÍDO')
+            
+        # Iniciar a nova página e desenhar o cabeçalho
+        draw_header()
+
+        # Escrevendo as atividades e a coluna "ATIVIDADE FOI REALIZADA"
+        pdf.setFillColorRGB(0, 0, 0)
+        y_posicao = 640
+        pdf.setFont("Helvetica", 8)
+        pdf.line(440, y_posicao + 10, 440, y_posicao - 100)      # 2° Linha vertical
+
+        pdf.line(15, y_posicao - 10, 580, y_posicao - 10)        # 1° Linha interna
+        pdf.line(15, y_posicao - 30, 580, y_posicao - 30)        # 2° Linha interna
+        pdf.line(15, y_posicao - 50, 580, y_posicao - 50)        # 3° Linha interna
+        pdf.line(15, y_posicao - 70, 580, y_posicao - 70)        # 4° Linha interna
+        pdf.line(15, y_posicao - 90, 580, y_posicao - 90)        # 5° Linha interna
+
+        y_posicao -= 20
+        if y_posicao < 50:
+            pdf.showPage()
+            draw_header()  # Desenha o cabeçalho na nova página
+            y_posicao = 770
+
         pdf.showPage()
+
     pdf.save()
     buffer.seek(0)
     return buffer
