@@ -21,9 +21,9 @@ with st.sidebar:
     )
 
 possiveis_colunas = {
-    "Atividade": ["ITEM", "Nome da Tarefa", "Nome da Atividade", "Atividade", "Tarefa"],
+    "Atividade": ["ITEM", "Nome da Tarefa", "Nome da Atividade", "Atividade", "Tarefa", "Serviço"],
     "Data Inicio": ["Início", "INÍCIO", "Data de Inicio", "Data Inicial", "Data a ser Iniciada"],
-    "Data Termino": ["Término", "TÉRMINO", "Data de Termino", "Data Final", "Data a ser Concluida", "Data Conclusao"]
+    "Data Termino": ["Término", "TÉRMINO", "Data de Termino", "Data Final", "Data a ser Concluida", "Data Conclusao", "Fim"]
 }
 
 def renomear_colunas(df_arquivo, possiveis_colunas):
@@ -53,22 +53,36 @@ def extrair_datas_do_arquivo(caminho_arquivo):
         return atividades, data_inicio, data_termino
 
 def calcular_dias_de_atividade(df_arquivo):
+    # Converta as colunas 'Data Inicio' e 'Data Termino' para datetime, tratando erros
     df_arquivo['Data Inicio'] = pd.to_datetime(df_arquivo['Data Inicio'], errors="coerce", dayfirst=True)
     df_arquivo['Data Termino'] = pd.to_datetime(df_arquivo['Data Termino'], errors="coerce", dayfirst=True)
+    
+    # Calcule os dias de atividade, lidando com valores NaT
     df_arquivo['Dias de Atividade'] = (df_arquivo['Data Termino'] - df_arquivo['Data Inicio']).dt.days + 1
-
+    
+    # Substitua NaN por 0 ou outro valor padrão, se necessário
+    df_arquivo['Dias de Atividade'].fillna(0, inplace=True)
+    
     df_final = pd.DataFrame()
     for _, row in df_arquivo.iterrows():
-        df_temporario = pd.DataFrame({
-            'Atividade': [row['Atividade']] * row['Dias de Atividade'],
-            'Atividade Foi Realizada': ['Sim (    ) - Não (    )'] * row['Dias de Atividade'],
-            'Percentual Concluído': "" * row['Dias de Atividade'],
-            'Data de Execução da Atividade': [row['Data Inicio'] + pd.Timedelta(days=i) for i in range(row['Dias de Atividade'])],
-        })
-        df_final = pd.concat([df_final, df_temporario], ignore_index=True)
-
+        try:
+            dias_de_atividade = int(row['Dias de Atividade'])  # Certifique-se de que é um inteiro
+        except ValueError:
+            dias_de_atividade = 0  # Ou outro valor padrão, se necessário
+        
+        if dias_de_atividade > 0:
+            df_temporario = pd.DataFrame({
+                'Atividade': [row['Atividade']] * dias_de_atividade,
+                'Atividade Foi Realizada': ['Sim (    ) - Não (    )'] * dias_de_atividade,
+                'Percentual Concluído': [""] * dias_de_atividade,
+                'Data de Execução da Atividade': [row['Data Inicio'] + pd.Timedelta(days=i) for i in range(dias_de_atividade)],
+            })
+            df_final = pd.concat([df_final, df_temporario], ignore_index=True)
+    
     df_final['Data de Execução da Atividade'] = df_final['Data de Execução da Atividade'].dt.strftime('%d/%m/%Y')
     return df_final
+
+
 
 # Configurações DO PDF
 fileName = f'Atividades_{local_atividade}.pdf'
